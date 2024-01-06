@@ -1,0 +1,4 @@
+INSERT INTO `USER`  VALUES ('1', '1', 'a');
+INSERT INTO `USER`  VALUES ('2', '1', 'b');
+INSERT INTO `USER`  VALUES ('3', '3', 'v');
+INSERT INTO `USER`  VALUES ('4', '4', 'd');
