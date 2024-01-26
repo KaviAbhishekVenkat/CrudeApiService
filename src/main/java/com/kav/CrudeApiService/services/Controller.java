@@ -2,6 +2,10 @@ package com.kav.CrudeApiService.services;
 
 
 import com.kav.CrudeApiService.dto.UserDetailsDto;
+import com.kav.CrudeApiService.exception.DuplicateUserException;
+import com.kav.CrudeApiService.exception.UserNotFoundException;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +19,16 @@ public class Controller {
     UserService service;
 
     @PostMapping("/addUser")
-    public UserDetailsDto addUser(@RequestBody UserDetailsDto user) {
+    @Operation(description = "Inserting new user")
+    public UserDetailsDto addUser(@RequestBody UserDetailsDto user) throws  DuplicateUserException {
+        UserDetailsDto userById = null;
+        try {
+            userById = getUserById(user.getUserId());
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        if(userById != null)
+             throw new DuplicateUserException("User already exits in db ");
         return service.saveUser(user);
     }
 
@@ -30,7 +43,12 @@ public class Controller {
     }
 
     @GetMapping("/getUserById/{id}")
-    public UserDetailsDto getUserById(@PathVariable  String id){
+    public UserDetailsDto getUserById(@PathVariable  String id) throws UserNotFoundException {
+        try {
+            Integer.parseInt(id);
+        }catch (Exception e){
+            throw new UserNotFoundException("User not found");
+        }
         return service.getUserByID(id);
     }
 
@@ -45,6 +63,7 @@ public class Controller {
     }
 
     @DeleteMapping("/deleteUser/{id}")
+    @Hidden
     public String deleteUser(@PathVariable String id) {
         return service.deleteProduct(id);
     }

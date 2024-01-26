@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "USER_TABLE   ")
+@Table(name = "USER_TABLE")
 public class UserDetailsDto {
     @Id
     String userId;
