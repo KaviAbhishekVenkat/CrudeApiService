@@ -1,5 +1,6 @@
 package com.kav.CrudeApiService.services;
 
+import com.kav.CrudeApiService.annotation.TrackExecutionTIme;
 import com.kav.CrudeApiService.dto.UserDetailsDto;
 import com.kav.CrudeApiService.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepo repo;
-
+    @TrackExecutionTIme
     public UserDetailsDto saveUser(UserDetailsDto dto) {
         return repo.save(dto);
     }
