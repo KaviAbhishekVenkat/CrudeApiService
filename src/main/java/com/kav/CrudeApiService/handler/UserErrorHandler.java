@@ -5,6 +5,7 @@ import com.kav.CrudeApiService.exception.DuplicateUserException;
 import com.kav.CrudeApiService.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -21,5 +22,10 @@ public class UserErrorHandler {
     @ExceptionHandler(DuplicateUserException.class)
     public ProblemDetail handleDuplicateUserException(DuplicateUserException exception){
         return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handleInvalidArgsException(MethodArgumentNotValidException exception){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 }

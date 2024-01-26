@@ -6,6 +6,7 @@ import com.kav.CrudeApiService.exception.DuplicateUserException;
 import com.kav.CrudeApiService.exception.UserNotFoundException;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class Controller {
 
     @PostMapping("/addUser")
     @Operation(description = "Inserting new user")
-    public UserDetailsDto addUser(@RequestBody UserDetailsDto user) throws  DuplicateUserException {
+    public UserDetailsDto addUser(@RequestBody @Valid UserDetailsDto user) throws  DuplicateUserException {
         UserDetailsDto userById = null;
         try {
             userById = getUserById(user.getUserId());
