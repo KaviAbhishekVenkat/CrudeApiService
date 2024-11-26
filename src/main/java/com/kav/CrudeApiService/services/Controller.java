@@ -6,6 +6,7 @@ import com.kav.CrudeApiService.exception.DuplicateUserException;
 import com.kav.CrudeApiService.exception.UserNotFoundException;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class Controller {
 
     @Autowired
     UserService service;
+
 
     @PostMapping("/addUser")
     @Operation(description = "Inserting new user")
